@@ -14,12 +14,12 @@ if (!process.env.JWT_SECRET) {
 
 const app = express();
 
-// Connect to MongoDB
-connectDB();
-
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Connect to MongoDB
+connectDB();
 
 // Rate limiting
 const authLimiter = rateLimit({
