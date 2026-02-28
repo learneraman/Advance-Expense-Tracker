@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum CategoryType {
+  INCOME
+  EXPENSE
+}
+
+model User {
+  id         Int        @id @default(autoincrement())
+  name       String
+  email      String     @unique
+  password   String
+  createdAt  DateTime   @default(now())
+
+  // Relations
+  expenses   Expense[]
+  categories Category[]
+}
+
+model Category {
+  id        Int          @id @default(autoincrement())
+  name      String
+  type      CategoryType
+  budget    Decimal?     @db.Decimal(10, 2)  // Monthly budget limit
+
+  // FK to User
+  userId    Int
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Relations
+  expenses  Expense[]
+}
+
+model Expense {
+  id          Int      @id @default(autoincrement())
+  amount      Decimal  @db.Decimal(10, 2)
+  description String?
+  date        DateTime
+  tags        String?  // Comma-separated tags for search
+
+  // FK to User
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // FK to Category
+  categoryId  Int
+  category    Category @relation(fields: [categoryId], references: [id])
+
+  @@index([userId])
+  @@index([categoryId])
+  @@index([date])
+}
+
