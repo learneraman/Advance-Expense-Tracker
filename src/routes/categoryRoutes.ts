@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { authenticate } from "../middleware/authMiddleware";
+import { authenticate, authorizeRoles } from "../middleware/authMiddleware";
 import {
   createCategory,
   getCategories,
@@ -19,19 +19,19 @@ const router = Router();
 // Apply auth middleware to all routes
 router.use(authenticate);
 
-// POST /api/categories - Create new category
-router.post("/", createCategory);
-
-// GET /api/categories - Get all categories (optionally filter by type)
-router.get("/", getCategories);
+// GET /api/categories - Get all categories
+router.get("/", authorizeRoles(["VIEWER", "ANALYST", "ADMIN"]), getCategories);
 
 // GET /api/categories/:id - Get single category
-router.get("/:id", getCategoryById);
+router.get("/:id", authorizeRoles(["VIEWER", "ANALYST", "ADMIN"]), getCategoryById);
 
-// PUT /api/categories/:id - Update category
-router.put("/:id", updateCategory);
+// POST /api/categories - Create new category (ADMIN ONLY)
+router.post("/", authorizeRoles(["ADMIN"]), createCategory);
 
-// DELETE /api/categories/:id - Delete category
-router.delete("/:id", deleteCategory);
+// PUT /api/categories/:id - Update category (ADMIN ONLY)
+router.put("/:id", authorizeRoles(["ADMIN"]), updateCategory);
+
+// DELETE /api/categories/:id - Delete category (ADMIN ONLY)
+router.delete("/:id", authorizeRoles(["ADMIN"]), deleteCategory);
 
 export default router;
