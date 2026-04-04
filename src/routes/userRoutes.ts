@@ -1,10 +1,15 @@
 import { Router } from "express";
-import { registerUser } from "../controllers/userController";
+import { registerUser, getAllUsers, updateRole, updateStatus } from "../controllers/userController";
+import { authenticate, authorizeRoles } from "../middleware/authMiddleware";
 
 const router = Router();
 
-// Simple example route to show Service-Repository pattern in action
+// Public route
 router.post("/register", registerUser);
 
-export default router;
+// Admin only routes for User & Role Management
+router.get("/", authenticate, authorizeRoles(["ADMIN"]), getAllUsers);
+router.put("/:id/role", authenticate, authorizeRoles(["ADMIN"]), updateRole);
+router.put("/:id/status", authenticate, authorizeRoles(["ADMIN"]), updateStatus);
 
+export default router;

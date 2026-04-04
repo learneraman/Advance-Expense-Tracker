@@ -12,11 +12,24 @@ enum CategoryType {
   EXPENSE
 }
 
+enum Role {
+  VIEWER
+  ANALYST
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
 model User {
   id         Int        @id @default(autoincrement())
   name       String
   email      String     @unique
   password   String
+  role       Role       @default(VIEWER)
+  status     UserStatus @default(ACTIVE)
   createdAt  DateTime   @default(now())
 
   // Relations

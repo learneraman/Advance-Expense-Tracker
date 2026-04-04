@@ -74,8 +74,19 @@ Returns aggregate data including: Total Income, Total Expenses, Net Balance, Cat
    Generate the Prisma Client and migrate your database:
    ```bash
    npx prisma generate
-   npx prisma migrate dev
+   npx prisma db push
    ```
+
+4. **Seed the Database (Important for Evaluation):**
+   To immediately test features like the Dashboard, run the seed script to populate Dummy Users, Categories, and Expenses.
+   ```bash
+   npx ts-node-dev prisma/seed.ts
+   ```
+   **Test Credentials Provided by Seed:**
+   - **Admin Access:** Email: `admin@finance.com` | Password: `password123`
+   - **Viewer Access:** Email: `viewer@finance.com` | Password: `password123`
+
+5. **Start the Development Server:**
 
 4. **Start the Development Server:**
    ```bash

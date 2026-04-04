@@ -28,7 +28,7 @@ app.get("/api-docs.json", (req: Request, res: Response) => {
   res.setHeader("Content-Type", "application/json");
   res.send(swaggerSpec);
 });
-
+  
 // API Routes
 app.use("/api", routes);
 
