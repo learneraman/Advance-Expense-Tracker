@@ -32,6 +32,11 @@ app.get("/api-docs.json", (req: Request, res: Response) => {
 // API Routes
 app.use("/api", routes);
 
+// Root endpoint redirecting to documentation
+app.get("/", (req: Request, res: Response) => {
+  res.redirect("/api-docs");
+});
+
 // Health check endpoint
 app.get("/health", (req: Request, res: Response) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });

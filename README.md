@@ -87,12 +87,22 @@ Returns aggregate data including: Total Income, Total Expenses, Net Balance, Cat
    - **Viewer Access:** Email: `viewer@finance.com` | Password: `password123`
 
 5. **Start the Development Server:**
-
-4. **Start the Development Server:**
    ```bash
    npm run dev
    ```
    The API will listen at `http://localhost:4000`.
+
+---
+
+## 🔗 API Documentation & Testing
+
+This project includes fully automated interactive API documentation via **Swagger UI**. To easily view and test the API:
+
+1. Follow the local setup to start the dev server (`npm run dev`).
+2. Open your web browser and navigate to:
+   **`http://localhost:4000/api-docs`**
+
+This interactive page provides a visual overview of all routes, schemas, required parameters, and allows you to test JWT authentication directly from the UI.
 
 ## 🛡️ License
 Licensed under the **ISC License**.
